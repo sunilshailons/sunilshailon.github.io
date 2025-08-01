@@ -1,10 +1,5 @@
-title: "Sunil Shailons"
-description: "Electronics Engineer | Signal Integrity | FPGA | Embedded Systems"
-author: Sunil Shailons
-email: sunilshailon@gmail.com
-github_username: sunilshailons
-linkedin_username: Sunil Shailon
-theme: minima
-
-# Show excerpts of posts on the homepage
-show_excerpts: true
+# Add this to your existing _config.yml file.
+# It will create navigation links at the top of your site.
+header_pages:
+  - about.md
+  - projects.md

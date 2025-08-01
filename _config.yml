@@ -1,3 +1,10 @@
-title: "Sunil Shailon"
-description: "Electronics & hardware blog and resume"
+title: "Sunil Shailons"
+description: "Electronics Engineer | Signal Integrity | FPGA | Embedded Systems"
+author: Sunil Shailons
+email: sunilshailon@gmail.com
+github_username: sunilshailons
+linkedin_username: Sunil Shailon
 theme: minima
+
+# Show excerpts of posts on the homepage
+show_excerpts: true

@@ -1,19 +1,25 @@
 ---
 layout: page
 title: Projects
-permalink: /projects/
 ---
 
-## My Mini Projects 🚀
+### Featured Projects
 
-### 1. eFuse Soft-Start Controller  
-Designed an eFuse circuit to handle fan inrush currents safely.  
-[View Project](https://github.com/sunilshailons/efuse-softstart)
+#### **Next Gen Carrier Switching Fabric Card**
+* **Duration:** March 2024 - Current
+* **Summary:** A central switching fabric card with 2.4T capacity.
+* **My Role:** I was responsible for the complete schematic design, power tree design, board design, FPGA implementation, cross-platform functional analysis, and signal, power, and clock tree design.
 
-### 2. FPGA DDR4 Prototyping  
-Worked on DDR4 controller integration and signal integrity validation.  
-[View Project](https://github.com/sunilshailons/fpga-ddr4)
+#### **Universal Line Card**
+* **Duration:** August 2023 - March 2024
+* **Summary:** A 2U line card with 400G switching capacity inside a 9U chassis.
+* **My Role:** I implemented FPGA PMBUS FSM logic onto a PCIe Switch to trigger switchover functionality for US ports between two central switch cards. I also handled board bring-up and validation.
 
-### 3. PMBus Fan Controller  
-Implemented PMBus commands to control system fans on UCD sequencer.  
-[View Project](https://github.com/sunilshailons/pmbus-fan-controller)
+#### **Carrier Ethernet Fabric Card**
+* **Duration:** June 2022 - June 2023
+* **Summary:** A fabric card with 64G switching capacity inside a 4U chassis.
+* **My Role:** My responsibilities included the complete schematic and board design, FPGA implementation, cross-platform functional analysis, Signal and Power Integrity Simulations, and Clock Tree design.
+
+#### **High-Speed Cards & Other Hardware**
+* **Duration:** September 2018 - May 2021 (at VVDN Technologies)
+* **Summary:** During my time at VVDN, I worked on several high-speed hardware projects, including bringing up high-speed cards with DDR4 SI simulation, designing PSE controllers, and developing a smart water heater board with a watchdog reset.

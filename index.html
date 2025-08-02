@@ -1,155 +1,302 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Sunil Shailon – Hardware Design Engineer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body { font-family: system-ui,-apple-system,BlinkMacSystemFont,sans-serif; background:#0f111a; color:#f5f5f5; margin:0; padding:2rem; max-width:900px; line-height: 1.6; }
-    h1 { font-size: 2.5rem; margin-top:0; }
-    h2 { color: #8792a7; font-size: 1.5rem; margin-top: 2.5rem; border-bottom: 1px solid #1f2a44; padding-bottom: 0.5rem; }
-    h3 { color: #d1d5db; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.2rem; }
-    .section { margin-bottom: 2rem; }
-    a { color:#6cb6ff; text-decoration:none; transition: color 0.3s ease; }
-    a:hover { color: #8ab6f9; }
-    .header-links a { margin-right: 15px; font-weight: bold; }
-    .header-links a:hover { text-decoration: underline; }
-    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 1rem; }
-    .tag { background:#1f2a44; color:#d1d5db; padding:6px 12px; border-radius:6px; font-size:.9em; transition: transform 0.2s ease; }
-    .tag:hover { transform: translateY(-2px); cursor: default; }
-    .social-icons a { display: inline-block; margin-right: 15px; }
-    .social-icons img { width: 32px; height: 32px; vertical-align: middle; transition: transform 0.2s ease; }
-    .social-icons img:hover { transform: translateY(-3px); }
-    .project-card {
-        background: #1a202c;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    }
-    .project-card h3 { color: #6cb6ff; margin-top: 0; }
-    @media (min-width: 768px) {
-      .skills-grid { grid-template-columns: repeat(4, 1fr); }
-      .tags { display: block; }
-    }
-  </style>
+    <meta charset="utf-8">
+    <title>Sunil Shailon – Hardware Design Engineer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        :root {
+            --primary-color: #6cb6ff;
+            --secondary-color: #1f2a44;
+            --text-color: #f5f5f5;
+            --light-text-color: #d1d5db;
+            --background-color: #0f111a;
+            --card-color: #1a202c;
+            --border-color: #1f2a44;
+        }
+
+        /* Basic Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+            background-color: var(--background-color);
+            background-image:
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-attachment: fixed;
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header and Navigation */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        h1 { font-size: 3rem; margin-top:0; color: var(--primary-color); }
+        .subtitle { font-size: 1.25rem; margin-bottom: 2rem; }
+
+        nav {
+            margin-bottom: 2rem;
+        }
+        .header-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .header-links a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 6px;
+        }
+        .header-links a:hover {
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(15, 17, 26, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            color: var(--light-text-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        p {
+            color: var(--light-text-color);
+        }
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #8ab6f9;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            background-color: var(--secondary-color);
+            color: var(--light-text-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .tag:hover {
+            transform: translateY(-2px);
+            background-color: #2e3a55;
+            cursor: default;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            display: inline-block;
+        }
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .social-icons img:hover {
+            transform: translateY(-3px);
+            filter: drop-shadow(0 0 5px var(--primary-color));
+        }
+
+        /* Projects */
+        .project-card {
+            background: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .project-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .skills-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .tags {
+                display: block;
+            }
+            header {
+                padding: 5rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Sunil Shailon</h1>
-    <p><strong>Hardware & Systems Design Engineer</strong></p>
-    <div class="header-links">
-        <a href="/">Home</a>
-        <a href="/about.html">About Me</a>
-        <a href="/projects.html">Projects</a>
-    </div>
-  </header>
+    <div class="container">
+        <header>
+            <h1>Sunil Shailon</h1>
+            <p class="subtitle"><strong>Hardware & Systems Design Engineer</strong></p>
+            <nav>
+                <div class="header-links">
+                    <a href="#about">About Me</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </header>
 
-  <div class="section">
-    <h2>About</h2>
-    <p>I build high-speed systems: signal integrity, FPGA/DDR4 prototyping, embedded debugging, and power sequencing. This site is my portfolio and blog hub.</p>
-  </div>
+        <main>
+            <div id="about" class="section">
+                <h2>About</h2>
+                <p>I build high-speed systems: signal integrity, FPGA/DDR4 prototyping, embedded debugging, and power sequencing. This site is my portfolio and blog hub.</p>
+            </div>
 
-  <div class="section">
-    <h2>Skills</h2>
-    <div class="skills-grid">
-      <div>
-        <h3>Industry Software & Tools</h3>
-        <div class="tags">
-          <div class="tag">DxDesigner</div>
-          <div class="tag">Altium</div>
-          <div class="tag">Cadence Allegro</div>
-          <div class="tag">KiCad</div>
-          <div class="tag">Quartus</div>
-          <div class="tag">Vivado</div>
-          <div class="tag">LT SPICE</div>
-          <div class="tag">Hyperlynx</div>
-          <div class="tag">ISE</div>
-        </div>
-      </div>
-      <div>
-        <h3>Programming Languages</h3>
-        <div class="tags">
-          <div class="tag">C</div>
-          <div class="tag">C++</div>
-          <div class="tag">Python</div>
-          <div class="tag">Arduino</div>
-          <div class="tag">RTL-Verilog</div>
-          <div class="tag">Bash scripting</div>
-        </div>
-      </div>
-      <div>
-        <h3>Protocols & Interfaces</h3>
-        <div class="tags">
-          <div class="tag">PCIe</div>
-          <div class="tag">DDR</div>
-          <div class="tag">I2C</div>
-          <div class="tag">PmBUS</div>
-          <div class="tag">SPI</div>
-          <div class="tag">RS-485</div>
-          <div class="tag">RS-232</div>
-          <div class="tag">SGMII</div>
-          <div class="tag">SerDes</div>
-          <div class="tag">XAUI</div>
-          <div class="tag">SATA</div>
-          <div class="tag">Ethernet</div>
-          <div class="tag">PoE</div>
-          <div class="tag">SD</div>
-          <div class="tag">JTAG</div>
-          <div class="tag">USB</div>
-          <div class="tag">MDIO</div>
-          <div class="tag">SYNCE</div>
-          <div class="tag">PTP</div>
-        </div>
-      </div>
-      <div>
-        <h3>Memory & Instruments</h3>
-        <div class="tags">
-          <div class="tag">Nand</div>
-          <div class="tag">NOR</div>
-          <div class="tag">SRAM</div>
-          <div class="tag">SSD</div>
-          <div class="tag">M.2 Sata</div>
-          <div class="tag">M.2 NVMe</div>
-          <div class="tag">DDR4</div>
-          <div class="tag">HBM</div>
-          <div class="tag">Oscilloscopes</div>
-          <div class="tag">Logic Analyzers</div>
-          <div class="tag">Function generators</div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <div id="skills" class="section">
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <div>
+                        <h3>Industry Software & Tools</h3>
+                        <div class="tags">
+                            <div class="tag">DxDesigner</div>
+                            <div class="tag">Altium</div>
+                            <div class="tag">Cadence Allegro</div>
+                            <div class="tag">KiCad</div>
+                            <div class="tag">Quartus</div>
+                            <div class="tag">Vivado</div>
+                            <div class="tag">LT SPICE</div>
+                            <div class="tag">Hyperlynx</div>
+                            <div class="tag">ISE</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Programming Languages</h3>
+                        <div class="tags">
+                            <div class="tag">C</div>
+                            <div class="tag">C++</div>
+                            <div class="tag">Python</div>
+                            <div class="tag">Arduino</div>
+                            <div class="tag">RTL-Verilog</div>
+                            <div class="tag">Bash scripting</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Protocols & Interfaces</h3>
+                        <div class="tags">
+                            <div class="tag">PCIe</div>
+                            <div class="tag">DDR</div>
+                            <div class="tag">I2C</div>
+                            <div class="tag">PmBUS</div>
+                            <div class="tag">SPI</div>
+                            <div class="tag">RS-485</div>
+                            <div class="tag">RS-232</div>
+                            <div class="tag">SGMII</div>
+                            <div class="tag">SerDes</div>
+                            <div class="tag">XAUI</div>
+                            <div class="tag">SATA</div>
+                            <div class="tag">Ethernet</div>
+                            <div class="tag">PoE</div>
+                            <div class="tag">SD</div>
+                            <div class="tag">JTAG</div>
+                            <div class="tag">USB</div>
+                            <div class="tag">MDIO</div>
+                            <div class="tag">SYNCE</div>
+                            <div class="tag">PTP</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Memory & Instruments</h3>
+                        <div class="tags">
+                            <div class="tag">Nand</div>
+                            <div class="tag">NOR</div>
+                            <div class="tag">SRAM</div>
+                            <div class="tag">SSD</div>
+                            <div class="tag">M.2 Sata</div>
+                            <div class="tag">M.2 NVMe</div>
+                            <div class="tag">DDR4</div>
+                            <div class="tag">HBM</div>
+                            <div class="tag">Oscilloscopes</div>
+                            <div class="tag">Logic Analyzers</div>
+                            <div class="tag">Function generators</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <div class="section">
-    <h2>Projects</h2>
-    <div class="project-card">
-        <h3><a href="/projects.html">Next Gen Carrier Switching Fabric Card</a></h3>
-        <p>Central switching fabric card 2.4T. Complete Schematic Design, Power Tree Design, Board Design, FPGA implementation, cross-platform functional analysis, Signal and Power Integrity Simulations, Clock Tree design.</p>
-    </div>
-    <div class="project-card">
-        <h3><a href="/projects.html">Universal Line Card</a></h3>
-        <p>2U LINE Card with 400G switching capacity inside a 9U chassis.</p>
-    </div>
-    <div class="project-card">
-        <h3><a href="/projects.html">Carrier Ethernet Fabric Card</a></h3>
-        <p>Fabric Card with 64G switching capacity inside a 4U chassis. Complete Schematic Design, Board Design, FPGA implementation, cross-platform functional analysis, Signal and Power Integrity Simulations, Clock Tree design.</p>
-    </div>
-  </div>
+            <div id="projects" class="section">
+                <h2>Projects</h2>
+                <div class="project-card">
+                    <h3><a href="/projects.html">Next Gen Carrier Switching Fabric Card</a></h3>
+                    <p>Central switching fabric card 2.4T. Complete Schematic Design, Power Tree Design, Board Design, FPGA implementation, cross-platform functional analysis, Signal and Power Integrity Simulations, Clock Tree design.</p>
+                </div>
+                <div class="project-card">
+                    <h3><a href="/projects.html">Universal Line Card</a></h3>
+                    <p>2U LINE Card with 400G switching capacity inside a 9U chassis.</p>
+                </div>
+                <div class="project-card">
+                    <h3><a href="/projects.html">Carrier Ethernet Fabric Card</a></h3>
+                    <p>Fabric Card with 64G switching capacity inside a 4U chassis. Complete Schematic Design, Board Design, FPGA implementation, cross-platform functional analysis, Signal and Power Integrity Simulations, Clock Tree design.</p>
+                </div>
+            </div>
 
-  <div class="section">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:sunilshailon@gmail.com">sunilshailon@gmail.com</a> · <a href="https://github.com/sunilshailons">GitHub</a></p>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/sunil-shailon-841065140/"><img src="assets/icons/linkedin-icon.svg" alt="LinkedIn Icon"></a>
-      <a href="https://github.com/sunilshailons"><img src="assets/icons/github-icon.svg" alt="GitHub Icon"></a>
-      <a href="mailto:sunilshailon@gmail.com"><img src="assets/icons/email-icon.svg" alt="Email Icon"></a>
-    </div>
-  </div>
+            <div id="contact" class="section">
+                <h2>Contact</h2>
+                <p>Email: <a href="mailto:sunilshailon@gmail.com">sunilshailon@gmail.com</a> · <a href="https://github.com/sunilshailons">GitHub</a></p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/sunil-shailon-841065140/"><img src="assets/icons/linkedin.svg" alt="LinkedIn Icon"></a>
+                    <a href="https://github.com/sunilshailons"><img src="assets/icons/github.svg" alt="GitHub Icon"></a>
+                    <a href="mailto:sunilshailon@gmail.com"><img src="assets/icons/gmail.svg" alt="Email Icon"></a>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

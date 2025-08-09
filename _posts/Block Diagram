@@ -1,0 +1,61 @@
+Mini Project DIY 
+A weather monitoring station which display temperature, CO2 level and light intensity on LCD. Print “Weather station” on first line 
+and print the timing as “08:MM:SS” after a delay of 3 Seconds display values of temp, CO2 and light in a rolling display moving from right to left direction. 
+Then repeat the sequence again. 
+Extend this application by interfacing ESP8266 Wi-Fi module and transferring temp, CO2 and light intensity, Moisture sensor data continuously to ThingSpeak cloud platform. 
+Simulate and verify this logic on Arduino Uno using Tinkercad circuits simulator.
+
+
+
+-BOM with links (check)
+| Item No. | Component                          | Qty | MPN / Model          | Link                                                                                     | Datasheet                                                                                  |
+|----------|------------------------------------|-----|----------------------|------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| 1        | Arduino Uno R3                     | 1   | A000066              | https://store.arduino.cc/products/arduino-uno-rev3                                       | https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf                        |
+| 2        | ESP8266 Wi-Fi Module (ESP-01)      | 1   | ESP-01               | https://www.adafruit.com/product/2282                                                    | https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf  |
+| 3        | AHT10 Temp & Humidity Sensor (I2C) | 1   | AHT10                | https://www.adafruit.com/product/4566                                                    | https://www.mouser.com/datasheet/2/737/GS_AHT10-DS-R1.2-1143054.pdf                        |
+| 4        | MH-Z19B CO₂ Sensor (UART)          | 1   | MH-Z19B              | https://www.waveshare.com/mh-z19b-co2-sensor.html                                        | https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf           |
+| 5        | Soil Moisture Sensor               | 1   | YL-69 + LM393 module | https://www.amazon.com/dp/B07QMTSPB2                                                     | https://components101.com/sites/default/files/component_datasheet/Soil%20Moisture%20Sensor%20Datasheet.pdf |
+| 6        | LDR (Light Dependent Resistor)     | 1   | GL5528               | https://www.amazon.com/dp/B07GRMZM9J                                                     | https://www.mouser.com/datasheet/2/348/GL5528-1834502.pdf                                  |
+| 7        | 16x2 LCD with I2C backpack         | 1   | HD44780 + PCF8574    | https://www.amazon.com/dp/B07P6VTV7Z                                                     | https://www.sparkfun.com/datasheets/LCD/HD44780.pdf                                        |
+| 8        | Breadboard                         | 1   | MB-102               | https://www.amazon.com/dp/B01EV6LJ7G                                                     | N/A                                                                                         |
+| 9        | Jumper Wires (Male-Male)           | 20  | —                    | https://www.amazon.com/dp/B01EV70C78                                                     | N/A                                                                                         |
+| 10       | Resistors (10k, 4.7k, etc.)        | Assorted | —               | https://www.amazon.com/dp/B07Q2G6SYB                                                     | N/A                                                                                         |
+| 11       | USB Cable for Arduino              | 1   | —                    | https://www.amazon.com/dp/B00NH11PEY                                                     | N/A                                                                                         |
+| 12       | Power Supply (5V 2A)               | 1   | —                    | https://www.amazon.com/dp/B00P936188                                                     | N/A                                                                                         |
+
+
+Key Connections:(cross check DC Analysis)
+  -The LDR and Soil Moisture Sensor operate on a 5V DC circuit and provide analog input to Arduino pins A0 and A1, respectively.
+  -The MH-Z19B CO₂ sensor requires a 5V DC supply and uses a Software UART on Digital pins D2 and D3.
+  -The AHT10 (3.3V-5V) and 16x2 LCD (5V) both use the Arduino's I²C on pins SDA (A4) and SCL (A5).
+  -The Arduino's native UART (TX/D1, RX/D0) connects to a Logic Level Shifter for 5V to 3.3V conversion. The shifted signals then connect to the ESP8266 Wi-Fi Module's (TXD, RXD) for communication with ThingSpeak Cloud.
+Power Supply Details:
+  -* 5V DC modules (LDR, Soil Moisture, MH-Z19B, 16x2 LCD) are powered by the Arduino's 5V output pin.
+  -The AHT10 sensor can use either the 5V or 3.3V pin.
+  -The ESP8266 Wi-Fi Module is powered by the Arduino's 3.3V output pin.
+I²C Pull-up Resistors:
+* I²C requires pull-up resistors on the SDA and SCL lines. If modules lack these, you may need to add external 4.7kΩ resistors between the lines and VCC to prevent communication issues.
+
+
+Block Diagram(preliminary)
+-Thought Process Application
+
++---------------------+       +---------------------------------+
+| AHT10 (I²C)         |       |          Arduino Uno            |
+| (3.3V-5V DC)        |------>|SDA (A4)                         |       +-------------------+
++---------------------+       |SCL (A5)                 SDA (A4)|------>| 16x2 LCD (I²C)    |
+                              |                         SCL (A5)|       | (5V DC)           |
++---------------------+       |                                 |       +-------------------+
+| MH-Z19B (UART)      |------>| Software RX (D2)                |
+| (5V DC)             |<------| Software TX (D3)                |                                     +------------------------+ 
++---------------------+       |                                 |       +---------------------+       |     ESP8266 Wi-Fi      |       +--------------------+
+                              |                       HW TX (D1)|------>| Logic Level         |------>|RXD (RX)                |------>| ThingSpeak Cloud   |
++---------------------+       |                                 |       | Shifter (5V -> 3.3V)|       |       (3.3V DC. )      |       |      (Wi-Fi)       |
+| LDR (Analog A0)     |------>| Analog 0 (A0)                   |       |                     |       |                        |       +--------------------+
+| (5V DC Circuit)     |       |                       HW RX (D0)|<------|                     |<------|TXD (TX)                |
++---------------------+       |                                 |       +---------------------+       +------------------------+ 
+                              |                                 |
++---------------------+       |                                 |
+| Soil Moisture       |------>| Analog 1 (A1)                   |
+| (Analog A1)         |       |                                 |
++---------------------+       +---------------------------------+

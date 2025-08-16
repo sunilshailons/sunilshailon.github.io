@@ -59,3 +59,106 @@ Block Diagram(preliminary)
 | Soil Moisture       |------>| Analog 1 (A1)        Digital 4  |------>| Motor Driver /      |------>| Water Pump Motor   |
 | (Analog A1)         |       |                                 |       | Relay Module        |       | (External Power)   |
 +---------------------+       +---------------------------------+       +---------------------+       +--------------------+
+
+Component Functionalities:
+AHT10 (I²C): A digital sensor that measures temperature and relative humidity.
+MH-Z19B (UART): A non-dispersive infrared (NDIR) sensor used to detect and measure carbon dioxide (CO₂) concentration in the air.
+LDR (Analog A0): A light-dependent resistor that varies its resistance based on light intensity, allowing the system to measure ambient light.
+Soil Moisture (Analog A1): A sensor that measures the volumetric water content of the soil.
+Arduino Uno: The central microcontroller that processes data from all sensors, makes decisions based on the logic (e.g., whether to pump water), and controls the other modules.
+16x2 LCD (I²C): A display that shows real-time sensor data and system status.
+Logic Level Shifter: A module that safely converts the 5V logic signals from the Arduino to the 3.3V logic signals required by the ESP8266.
+ESP8266 Wi-Fi Module: Enables wireless communication, connecting the system to the internet to send data to the cloud and receive remote control commands.
+ThingSpeak Cloud: An IoT analytics platform that collects, visualizes, and stores sensor data, and allows for remote control of the system.
+Motor Driver / Relay Module: An electronic switch that allows the low-current Arduino to control the high-current water pump motor safely.
+Water Pump Motor: The component responsible for physically pumping water, activated by the motor driver based on system commands.
+
+Key Connections:
+-The LDR and Soil Moisture Sensor operate on a 5V DC circuit and provide analog input to Arduino pins A0 and A1, respectively.
+-The MH-Z19B CO₂ sensor requires a 5V DC supply and uses a Software UART on Digital pins D2 and D3.
+-The AHT10 (3.3V-5V) and 16x2 LCD (5V) both use the Arduino's I²C on pins SDA (A4) and SCL (A5).
+-The Arduino's native UART (TX/D1, RX/D0) connects to a Logic Level Shifter for 5V to 3.3V conversion. The shifted signals then connect to the ESP8266 Wi-Fi Module's (TXD, RXD) for communication with ThingSpeak Cloud.
+-A new connection has been added for the Water Pump Motor. The Arduino's Digital Pin 4 controls a Motor Driver or Relay Module. This allows for automated control based on sensor data (moisture/climate)
+or manual control commands received via the ESP8266 from the cloud.
+
+Power Supply Details:
+-5V DC modules (LDR, Soil Moisture, MH-Z19B, 16x2 LCD) are powered by the Arduino's 5V output pin.
+-The AHT10 sensor can use either the 5V or 3.3V pin.
+-The ESP8266 Wi-Fi Module is powered by the Arduino's 3.3V output pin.
+-The Water Pump Motor will require a separate external power supply, as it typically requires more current than the Arduino can provide. 
+-The motor driver/relay module will connect this external power source to the pump.
+
+I²C Pull-up Resistors:
+I²C requires pull-up resistors on the SDA and SCL lines. If modules lack these, you may need to add external 4.7kΩ resistors between the lines and VCC to prevent communication issues.
+
+
+
+Similarly if you want to try and build a system with native 3.3V for all sensors and w/o using any level translation use only direct connections from 3.3V block to others.
+
+3.3V System Block Diagram
+This revised diagram presents a fully 3.3V-compatible system architecture, eliminating the need for a logic level shifter and simplifying the overall design. 
+All core components now operate at a consistent voltage level.
+
+
+
+BOM
+Component	Description	Datasheet/Reference Link
+Arduino Pro Mini	3.3V / 8MHz Microcontroller	https://store-usa.arduino.cc/products/arduino-pro-mini
+AHT10 Sensor	Temperature & Humidity Sensor	https://cdn.sparkfun.com/assets/f/f/0/2/7/AHT10_Datasheet_20190802.pdf
+SCD30 Sensor	NDIR CO_2 Sensor (3.3V compatible)	https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf
+LDR	Light-Dependent Resistor	https://www.vishay.com/docs/84102/84102.pdf
+Soil Moisture Sensor	Capacitive Soil Moisture Sensor (3.3V)	https://cdn-learn.adafruit.com/assets/assets/000/067/834/original/Capacitive_Soil_Moisture_Sensor_v2.0_1.pdf
+16x2 LCD	3.3V LCD with I²C Interface	https://cdn-learn.adafruit.com/assets/assets/000/028/318/original/adafruit_I2C_lcd.pdf
+ESP8266	Wi-Fi Module	https://cdn.sparkfun.com/assets/learn_tutorials/2/5/7/ESP8266_Datasheet.pdf
+Motor Driver/Relay	3.3V-compatible Relay Module	https://www.sparkfun.com/datasheets/Components/DFRduino%20Relay%20Shield%20V1.0.pdf
+Water Pump	Small DC Water Pump	https://cdn.sparkfun.com/assets/learn_tutorials/2/5/7/Micro-Pump_and_Valve_Data.pdf
+
+Updated Blocks considering ESP32 Processor with SIM7000E
+┌───────────────────────────────────────────────────────────────────────────────┐
+│                          AGROSENSE EDGE (ESP32-S3-WROOM-2)                    │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  ┌─────────────┐     ┌─────────────┐     ┌────────────────┐                  │
+│  │             │     │             │     │                │                  │
+│  │  POWER      │     │  ESP32-S3   │     │   W5500        │                  │
+│  │ (12-24V DC) ├─────► (WiFi/BLE/  ├─────► SPI Ethernet   ├───► RJ45         │
+│  │             │     │  USB-OTG)   │     │  (10/100Mbps)  │                  │
+│  └──────┬──────┘     └──────┬──────┘     └────────────────┘                  │
+│         │                   │                                                │
+│         ▼                   ▼                                                │
+│  ┌─────────────┐     ┌─────────────┐     ┌────────────────┐                  │
+│  │             │     │             │     │                │                  │
+│  │  4G/LTE     │     │   DISPLAY   │     │   MicroSD      │                  │
+│  │ (SIM7000E)  ◄─────┤ (OLED 1.3") │     │   (SPI)        │                  │
+│  │             │     │             │     │                │                  │
+│  └──────┬──────┘     └─────────────┘     └──────┬────────┘                  │
+│         │                                      ▲                             │
+│         ▼                                      │                             │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────┴──────┐                     │
+│  │             │     │             │     │            │                     │
+│  │  GPS        │     │  MOTOR      │     │  SENSORS   │                     │
+│  │ (Built-in)  │     │ (Relay/DC)  ◄─────┤ (Temp, CO₂,│                     │
+│  │             │     │             │     │  Soil, etc.)│                     │
+│  └─────────────┘     └─────────────┘     └────────────┘                     │
+│                                                                               │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  ┌─────────────────────────────────────────────────────────────────────────┐  │
+│  │                             CLOUD & REMOTE                             │  │
+│  │                                                                         │  │
+│  │  ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐         │  │
+│  │  │       │    │       │    │       │    │       │    │       │         │  │
+│  │  │ AWS   │    │ AZURE │    │ GOOGLE│    │ MQTT  │    │ SMS   │         │  │
+│  │  │ IoT   │    │ IoT   │    │ CLOUD │    │ BROKER│    │ ALERTS│         │  │
+│  │  │       │    │       │    │       │    │       │    │       │         │  │
+│  │  └───┬───┘    └───┬───┘    └───┬───┘    └───┬───┘    └───┬───┘         │  │
+│  │      │            │            │            │            │             │  │
+│  │      ▼            ▼            ▼            ▼            ▼             │  │
+│  │  ┌─────────────────────────────────────────────────────────────────┐  │  │
+│  │  │                     DASHBOARD & ANALYTICS                       │  │  │
+│  │  │  (Grafana, Power BI, Custom Web App)                            │  │  │
+│  │  └─────────────────────────────────────────────────────────────────┘  │  │
+│  │                                                                         │  │
+│  └─────────────────────────────────────────────────────────────────────────┘  │
+│                                                                               │
+└───────────────────────────────────────────────────────────────────────────────┘

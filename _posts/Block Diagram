@@ -114,6 +114,38 @@ Motor Driver/Relay	3.3V-compatible Relay Module	https://www.sparkfun.com/datashe
 Water Pump	Small DC Water Pump	https://cdn.sparkfun.com/assets/learn_tutorials/2/5/7/Micro-Pump_and_Valve_Data.pdf
 
 Updated Blocks considering ESP32 Processor with SIM7000E
+
+
+
+                            ┌───────────────┐
+                            │  12V DC Input  │
+                            │ (Barrel Jack) │
+                            └──────┬───────┘
+                                   ▼
+                            ┌───────────────┐
+                            │  12V→5V Buck  │
+                            │  (LM2675-5.0) │
+                            └──────┬───────┘
+                                   ▼
+                    ┌──────────────┴─────────────┐
+                    │                            │
+           ┌────────▼───────┐           ┌────────▼───────┐
+           │  5V→3.3V LDO   │           │  USB Type-C    │
+           │ (AMS1117-3.3V) │           │  (VBUS 5V)     │
+           └────────┬───────┘           └────────┬───────┘
+                    │                            │
+                    ▼                            ▼
+           ┌─────────────────────────────────────────────┐
+           │                Power Muxing                 │
+           │  (Prioritize DC Jack over USB via MOSFET)   │
+           └──────────────────────┬──────────────────────┘
+                                   ▼
+                          ┌─────────────────┐
+                          │  3.3V/5V Rails  │
+                          │ (Board Power)   │
+                          └─────────────────┘
+
+Block Diagram.
 ┌───────────────────────────────────────────────────────────────────────────────┐
 │                          AGROSENSE EDGE (ESP32-S3-WROOM-2)                    │
 ├───────────────────────────────────────────────────────────────────────────────┤
